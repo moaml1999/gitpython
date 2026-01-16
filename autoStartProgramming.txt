@@ -1,0 +1,34 @@
+Build system start automatically on raspberry pi (GUI)
+
+
+
+- Build service file 
+
+sudo nano /lib/systemd/system/mygame.service
+
+- write service
+
+
+[Unit]
+Description=Simple Pygame GUI on Boot
+After=graphical.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/moamel/mygame/main.py
+WorkingDirectory=/home/moamel/mygame
+User=moamel
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Restart=always
+
+[Install]
+WantedBy=graphical.target
+
+
+- in command line 
+
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+sudo systemctl restart mygame.service
+ 
